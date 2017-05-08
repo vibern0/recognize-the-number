@@ -43,6 +43,17 @@ while err > target and epoch < max_epochs:
 print('epoch:', epoch, 'mse:', err)
 
 
+t_train_in = [
+    [T, T],
+    [T, F],
+    [F, T],
+    [F, F],
+]
+t_out1 = tf.tanh(tf.add(tf.matmul(t_train_in, w1), b1))
+t_out2 = tf.tanh(tf.add(tf.matmul(t_out1, w2), b2))
+t_result = sess.run([t_out2])
+print('res', t_result)
+
 #variables_names =[v.name for v in tf.trainable_variables()]
 #values = sess.run(variables_names)
 #for k,v in zip(variables_names, values):
