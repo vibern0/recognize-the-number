@@ -41,3 +41,9 @@ while err > target and epoch < max_epochs:
    err, _ = sess.run([mse, train])
 
 print('epoch:', epoch, 'mse:', err)
+
+
+#variables_names =[v.name for v in tf.trainable_variables()]
+#values = sess.run(variables_names)
+#for k,v in zip(variables_names, values):
+#    print(k, v)
