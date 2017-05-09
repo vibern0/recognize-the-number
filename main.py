@@ -1,28 +1,39 @@
 import tensorflow as tf
-
-T, F = 1., 0.
+#
+import seaborn as sn
+import pandas as pd
+import matplotlib.pyplot as plt
 
 train_in = [
- [T, T],
- [T, F],
- [F, T],
- [F, F],
+    [1., 1.],
+    [1., 0.],
+    [0., 1.],
+    [0., 0.],
 ]
 
 train_out = [
- [F],
- [T],
- [T],
- [F],
+    [0.],
+    [1.],
+    [1.],
+    [0.],
 ]
+
+def confusion_matrix_graphic(array):
+    df_cm = pd.DataFrame(array, index = [i for i in 'ABCDEFGHIJK'],
+                      columns = [i for i in 'ABCDEFGHIJK'])
+    plt.figure(figsize = (10,7))
+    sn.heatmap(df_cm, annot=True)
+    # Display matrix
+    plt.matshow(array)
+    plt.show()
 
 # test training and result 35 times
 for x in range(0, 35):
 
-    w1 = tf.Variable(tf.random_normal([2, 2]), name='w1')
-    b1 = tf.Variable(tf.zeros([2]), name='b1')
+    w1 = tf.Variable(tf.random_normal([2, 3]), name='w1')
+    b1 = tf.Variable(tf.zeros([3]), name='b1')
 
-    w2 = tf.Variable(tf.random_normal([2, 1]), name='w2')
+    w2 = tf.Variable(tf.random_normal([3, 1]), name='w2')
     b2 = tf.Variable(tf.zeros([1]), name='b2')
 
     # activation functions
@@ -37,6 +48,8 @@ for x in range(0, 35):
     # see more https://www.tensorflow.org/api_guides/python/train
     train = tf.train.GradientDescentOptimizer(0.01).minimize(mse)
 
+    # tf.Session(config=tf.ConfigProto(log_device_placement=True))
+    # to check gpu using if there is one available
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
@@ -44,22 +57,36 @@ for x in range(0, 35):
     epoch, max_epochs = 0, 10000
 
     while err > target and epoch < max_epochs:
-       epoch += 1
-       err, _ = sess.run([mse, train])
+        epoch += 1
+        err, _ = sess.run([mse, train])
 
     print('epoch:', epoch, 'mse:', err)
 
     # test results
     t_train_in = [
-        [T, T],
-        [T, F],
-        [F, T],
-        [F, F],
+        [1., 1.],
+        [1., 0.],
+        [0., 1.],
+        [0., 0.],
     ]
     t_out1 = tf.tanh(tf.add(tf.matmul(t_train_in, w1), b1))
     t_out2 = tf.tanh(tf.add(tf.matmul(t_out1, w2), b2))
     t_result = sess.run([t_out2])
     print('res', t_result)
+
+    
+    """confusion_matrix_graphic(
+            [[33,2,0,0,0,0,0,0,0,1,3],
+            [3,31,0,0,0,0,0,0,0,0,0],
+            [0,4,41,0,0,0,0,0,0,0,1],
+            [0,1,0,30,0,6,0,0,0,0,1],
+            [0,0,0,0,38,10,0,0,0,0,0],
+            [0,0,0,3,1,39,0,0,0,0,4],
+            [0,2,2,0,4,1,31,0,0,0,2],
+            [0,1,0,0,0,0,0,36,0,2,0],
+            [0,0,0,0,0,0,1,5,37,5,1],
+            [3,0,0,0,0,0,0,0,0,39,0],
+            [0,0,0,0,0,0,0,0,0,0,38]])"""
 
     # variables_names =[v.name for v in tf.trainable_variables()]
     # values = sess.run(variables_names)
