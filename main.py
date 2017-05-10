@@ -3,6 +3,8 @@ import tensorflow as tf
 import seaborn as sn
 import pandas as pd
 import matplotlib.pyplot as plt
+#
+import numpy as np
 
 train_in = [
     [1., 1.],
@@ -19,8 +21,8 @@ train_out = [
 ]
 
 def confusion_matrix_graphic(array):
-    df_cm = pd.DataFrame(array, index = [i for i in 'ABCDEFGHIJK'],
-                      columns = [i for i in 'ABCDEFGHIJK'])
+    df_cm = pd.DataFrame(array, index = [i for i in 'AB'],
+                      columns = [i for i in 'AB'])
     plt.figure(figsize = (10,7))
     sn.heatmap(df_cm, annot=True)
     # Display matrix
@@ -30,10 +32,10 @@ def confusion_matrix_graphic(array):
 # test training and result 35 times
 for x in range(0, 35):
 
-    w1 = tf.Variable(tf.random_normal([2, 3]), name='w1')
-    b1 = tf.Variable(tf.zeros([3]), name='b1')
+    w1 = tf.Variable(tf.random_normal([2, 2]), name='w1')
+    b1 = tf.Variable(tf.zeros([2]), name='b1')
 
-    w2 = tf.Variable(tf.random_normal([3, 1]), name='w2')
+    w2 = tf.Variable(tf.random_normal([2, 1]), name='w2')
     b2 = tf.Variable(tf.zeros([1]), name='b2')
 
     # activation functions
@@ -63,18 +65,49 @@ for x in range(0, 35):
     print('epoch:', epoch, 'mse:', err)
 
     # test results
+    output_array = np.zeros((2, 2), dtype=np.float32)
     t_train_in = [
         [1., 1.],
         [1., 0.],
         [0., 1.],
         [0., 0.],
     ]
-    t_out1 = tf.tanh(tf.add(tf.matmul(t_train_in, w1), b1))
-    t_out2 = tf.tanh(tf.add(tf.matmul(t_out1, w2), b2))
-    t_result = sess.run([t_out2])
-    print('res', t_result)
+    for y in range(0, 5):
+        t_out1 = tf.tanh(tf.add(tf.matmul(t_train_in, w1), b1))
+        t_out2 = tf.tanh(tf.add(tf.matmul(t_out1, w2), b2))
+        t_result = sess.run([t_out2])
 
-    
+        # add to graph
+        if t_result[0][0] < 0.5:
+            print("v")
+            output_array[0][0] = output_array[0][0] + 1
+        else:
+            output_array[0][1] = output_array[0][1] + 1
+
+        if t_result[0][3] < 0.5:
+            output_array[0][0] = output_array[0][0] + 1
+        else:
+            output_array[0][1] = output_array[0][1] + 1
+
+        ##
+        if t_result[0][1] > 0.5:
+            output_array[1][1] = output_array[1][1] + 1
+        else:
+            output_array[1][0] = output_array[1][0] + 1
+
+        if t_result[0][2] > 0.5:
+            output_array[1][1] = output_array[1][1] + 1
+        else:
+            output_array[1][0] = output_array[1][0] + 1
+
+
+        # output_array = output_array + t_result[0]
+        # print('res', t_result[0][0])
+        # print('res', t_result)
+        # print('res2', t_result[0] + t_result[0])
+
+    confusion_matrix_graphic(output_array)
+
     """confusion_matrix_graphic(
             [[33,2,0,0,0,0,0,0,0,1,3],
             [3,31,0,0,0,0,0,0,0,0,0],
