@@ -5,6 +5,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 #
 import numpy as np
+#
+import time
 
 train_in = [
     [1., 1.],
@@ -29,26 +31,28 @@ def confusion_matrix_graphic(array):
     plt.matshow(array)
     plt.show()
 
+test_success = 0
+start = time.time()
 # test training and result 35 times
 for x in range(0, 35):
 
-    w1 = tf.Variable(tf.random_normal([2, 2]), name='w1')
-    b1 = tf.Variable(tf.zeros([2]), name='b1')
+    w1 = tf.Variable(tf.random_normal([2, 3]), name='w1')
+    b1 = tf.Variable(tf.zeros([3]), name='b1')
 
-    w2 = tf.Variable(tf.random_normal([2, 1]), name='w2')
+    w2 = tf.Variable(tf.random_normal([3, 1]), name='w2')
     b2 = tf.Variable(tf.zeros([1]), name='b2')
 
     # activation functions
     # see more https://www.tensorflow.org/api_guides/python/nn
-    out1 = tf.tanh(tf.add(tf.matmul(train_in, w1), b1))
-    out2 = tf.tanh(tf.add(tf.matmul(out1, w2), b2))
+    out1 = tf.sigmoid(tf.add(tf.matmul(train_in, w1), b1))
+    out2 = tf.sigmoid(tf.add(tf.matmul(out1, w2), b2))
 
     error = tf.subtract(train_out, out2)
     mse = tf.reduce_mean(tf.square(error))
 
     # backpropagation method
     # see more https://www.tensorflow.org/api_guides/python/train
-    train = tf.train.GradientDescentOptimizer(0.01).minimize(mse)
+    train = tf.train.AdamOptimizer(0.01).minimize(mse)
 
     # tf.Session(config=tf.ConfigProto(log_device_placement=True))
     # to check gpu using if there is one available
@@ -64,15 +68,22 @@ for x in range(0, 35):
 
     print('epoch:', epoch, 'mse:', err)
 
+    if err < target:
+        test_success = test_success + 1
+
     # test results
-    output_array = np.zeros((2, 2), dtype=np.float32)
+    """output_array = np.zeros((2, 2), dtype=np.float32)
     t_train_in = [
         [1., 1.],
         [1., 0.],
         [0., 1.],
         [0., 0.],
     ]
-    for y in range(0, 5):
+    t_out1 = tf.tanh(tf.add(tf.matmul(t_train_in, w1), b1))
+    t_out2 = tf.tanh(tf.add(tf.matmul(t_out1, w2), b2))
+    t_result = sess.run([t_out2])"""
+
+    """for y in range(0, 5):
         t_out1 = tf.tanh(tf.add(tf.matmul(t_train_in, w1), b1))
         t_out2 = tf.tanh(tf.add(tf.matmul(t_out1, w2), b2))
         t_result = sess.run([t_out2])
@@ -98,7 +109,7 @@ for x in range(0, 35):
         if t_result[0][2] > 0.5:
             output_array[1][1] = output_array[1][1] + 1
         else:
-            output_array[1][0] = output_array[1][0] + 1
+            output_array[1][0] = output_array[1][0] + 1"""
 
 
         # output_array = output_array + t_result[0]
@@ -106,7 +117,7 @@ for x in range(0, 35):
         # print('res', t_result)
         # print('res2', t_result[0] + t_result[0])
 
-    confusion_matrix_graphic(output_array)
+    #confusion_matrix_graphic(output_array)
 
     """confusion_matrix_graphic(
             [[33,2,0,0,0,0,0,0,0,1,3],
@@ -125,3 +136,6 @@ for x in range(0, 35):
     # values = sess.run(variables_names)
     # for k,v in zip(variables_names, values):
     #     print(k, v)
+
+print('time', time.time() - start)
+print('success ', test_success)
