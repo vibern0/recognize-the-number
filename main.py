@@ -8,186 +8,19 @@ import numpy as np
 #
 import time
 
-# 0., 0., 0., 0., 0.
-# 0., 1., 1., 0., 0.
-# 1., 0., 0., 1., 0.
-# 1., 0., 0., 1., 0.
-# 1., 0., 0., 1., 0.
-# 0., 1., 1., 0., 0.
-# 0., 0., 0., 0., 0.
-
-# 0., 0., 0., 0., 0.
-# 0., 0., 0., 0., 0.
-# 0., 0., 0., 0., 0.
-# 0., 0., 0., 0., 0.
-# 0., 0., 0., 0., 0.
-# 0., 0., 0., 0., 0.
-# 0., 0., 0., 0., 0.
-
-
-train_in = [
-    [
-        0., 0., 0., 0., 0.,
-        0., 1., 0., 0., 0.,
-        1., 0., 1., 0., 0.,
-        1., 0., 1., 0., 0.,
-        1., 0., 1., 0., 0.,
-        0., 1., 0., 0., 0.,
-        0., 0., 0., 0., 0.
-    ],
-    [
-        0., 0., 0., 0., 0.,
-        0., 1., 1., 0., 0.,
-        1., 0., 0., 1., 0.,
-        1., 0., 0., 1., 0.,
-        1., 0., 0., 1., 0.,
-        0., 1., 1., 0., 0.,
-        0., 0., 0., 0., 0.
-    ],
-    [
-        0., 0., 0., 0., 0.,
-        0., 0., 1., 0., 0.,
-        0., 1., 0., 1., 0.,
-        0., 1., 0., 1., 0.,
-        0., 1., 0., 1., 0.,
-        0., 0., 1., 0., 0.,
-        0., 0., 0., 0., 0.
-    ],
-    [
-        0., 0., 0., 0., 0.,
-        0., 0., 1., 1., 0.,
-        0., 1., 0., 0., 1.,
-        0., 1., 0., 0., 1.,
-        0., 1., 0., 0., 1.,
-        0., 0., 1., 1., 0.,
-        0., 0., 0., 0., 0.
-    ],
-    [
-        0., 0., 0., 0., 0.,
-        0., 0., 0., 1., 0.,
-        0., 0., 1., 0., 1.,
-        0., 0., 1., 0., 1.,
-        0., 0., 1., 0., 1.,
-        0., 0., 0., 1., 0.,
-        0., 0., 0., 0., 0.
-    ],
-    [
-        0., 0., 0., 0., 0.,
-        0., 1., 0., 0., 0.,
-        1., 1., 0., 0., 0.,
-        0., 1., 0., 0., 0.,
-        0., 1., 0., 0., 0.,
-        0., 1., 0., 0., 0.,
-        0., 0., 0., 0., 0.
-    ],
-    [
-        0., 0., 0., 0., 0.,
-        0., 1., 0., 0., 0.,
-        1., 1., 0., 0., 0.,
-        0., 1., 0., 0., 0.,
-        0., 1., 0., 0., 0.,
-        1., 1., 1., 0., 0.,
-        0., 0., 0., 0., 0.
-    ],
-    [
-        0., 0., 0., 0., 0.,
-        0., 0., 1., 0., 0.,
-        0., 1., 1., 0., 0.,
-        0., 0., 1., 0., 0.,
-        0., 0., 1., 0., 0.,
-        0., 0., 1., 0., 0.,
-        0., 0., 0., 0., 0.
-    ],
-    [
-        0., 0., 0., 0., 0.,
-        0., 0., 1., 0., 0.,
-        0., 1., 1., 0., 0.,
-        0., 0., 1., 0., 0.,
-        0., 0., 1., 0., 0.,
-        0., 1., 1., 1., 0.,
-        0., 0., 0., 0., 0.
-    ],
-    [
-        0., 0., 0., 0., 0.,
-        0., 0., 0., 1., 0.,
-        0., 0., 1., 1., 0.,
-        0., 0., 0., 1., 0.,
-        0., 0., 0., 1., 0.,
-        0., 0., 0., 1., 0.,
-        0., 0., 0., 0., 0.
-    ],
-    [
-        0., 0., 0., 0., 0.,
-        0., 0., 0., 1., 0.,
-        0., 0., 1., 1., 0.,
-        0., 0., 0., 1., 0.,
-        0., 0., 0., 1., 0.,
-        0., 0., 1., 1., 1.,
-        0., 0., 0., 0., 0.
-    ],
-]
-
-train_out = [
-    [0.],
-    [0.],
-    [0.],
-    [0.],
-    [0.],
-    [1.],
-    [1.],
-    [1.],
-    [1.],
-    [1.],
-    [1.],
-]
-
-def confusion_matrix_graphic(array):
-    df_cm = pd.DataFrame(array, index = [i for i in 'AB'],
-                      columns = [i for i in 'AB'])
-    plt.figure(figsize = (10,7))
-    sn.heatmap(df_cm, annot=True)
-    # Display matrix
-    plt.matshow(array)
-    plt.show()
+import dataset
+import neural
 
 test_success = 0
 start = time.time()
 # test training and result 5 times
 for x in range(0, 5):
 
-    w1 = tf.Variable(tf.random_normal([35, 20]), name='w1')
-    b1 = tf.Variable(tf.zeros([20]), name='b1')
-
-    w2 = tf.Variable(tf.random_normal([20, 1]), name='w2')
-    b2 = tf.Variable(tf.zeros([1]), name='b2')
-
-    # activation functions
-    # see more https://www.tensorflow.org/api_guides/python/nn
-    out1 = tf.sigmoid(tf.add(tf.matmul(train_in, w1), b1))
-    out2 = tf.sigmoid(tf.add(tf.matmul(out1, w2), b2))
-
-    error = tf.subtract(train_out, out2)
-    mse = tf.reduce_mean(tf.square(error))
-
-    # backpropagation method
-    # see more https://www.tensorflow.org/api_guides/python/train
-    train = tf.train.AdamOptimizer(0.01).minimize(mse)
-
-    # tf.Session(config=tf.ConfigProto(log_device_placement=True))
-    # to check gpu using if there is one available
-    sess = tf.Session()
-    sess.run(tf.global_variables_initializer())
-
-    err, target = 1, 0.01
-    epoch, max_epochs = 0, 10000
-
-    while err > target and epoch < max_epochs:
-        epoch += 1
-        err, _ = sess.run([mse, train])
+    [w1, w2, b1, b2, epoch, err, sess] = neural.train()
 
     print('epoch:', epoch, 'mse:', err)
 
-    if err < target:
+    if err < 0.01: #target
         test_success = test_success + 1
 
     # test results
@@ -198,7 +31,7 @@ for x in range(0, 5):
         [0., 1.],
         [0., 0.],
     ]"""
-    t_out1 = tf.sigmoid(tf.add(tf.matmul(train_in, w1), b1))
+    t_out1 = tf.sigmoid(tf.add(tf.matmul(dataset.train_in, w1), b1))
     t_out2 = tf.sigmoid(tf.add(tf.matmul(t_out1, w2), b2))
     t_result = sess.run([t_out2])
 
