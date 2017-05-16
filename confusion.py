@@ -1,4 +1,8 @@
 
+import seaborn as sn
+import pandas as pd
+import matplotlib.pyplot as plt
+
 def confusion_matrix_graphic(array):
     df_cm = pd.DataFrame(array, index = [i for i in 'AB'],
                       columns = [i for i in 'AB'])

@@ -2,7 +2,7 @@ import tensorflow as tf
 #
 import dataset
 
-def train():
+def train(sess):
     w1 = tf.Variable(tf.random_normal([35, 20]), name='w1')
     b1 = tf.Variable(tf.zeros([20]), name='b1')
 
@@ -23,7 +23,7 @@ def train():
 
     # tf.Session(config=tf.ConfigProto(log_device_placement=True))
     # to check gpu using if there is one available
-    sess = tf.Session()
+    # sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
     err, target = 1, 0.01
@@ -33,4 +33,4 @@ def train():
         epoch += 1
         err, _ = sess.run([mse, train])
 
-    return [w1, w2, b1, b2, epoch, err, sess]
+    return [w1, w2, b1, b2, epoch, err]
