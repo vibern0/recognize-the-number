@@ -26,4 +26,4 @@ def test_neural(w1, w2, b1, b2, sess):
     print('result', t_result)
 
     # do the harlem shake
-    confusion.confusion_matrix_graphic(matrix_res)
+    # confusion.confusion_matrix_graphic(matrix_res)
