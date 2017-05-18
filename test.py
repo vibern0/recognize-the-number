@@ -29,14 +29,21 @@ def test_neural(w1, w2, b1, b2, sess):
 
     # demo matrix
     matrix_res = [
-        [5, 0],
-        [0, 5]
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
     ]
 
     # debug stuff
     # print('result', t_result)
 
-    print(round_results(t_result[0]))
+    # print(round_results(t_result[0]))
+    # print(t_result)
+
+    rounded_results = round_results(t_result[0])
+    matrix_res = confusion.build_matrix_array(matrix_res, dataset.train_out, rounded_results)
 
     # do the harlem shake
-    # confusion.confusion_matrix_graphic(matrix_res)
+    confusion.confusion_matrix_graphic(matrix_res)
