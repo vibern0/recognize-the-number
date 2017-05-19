@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 #
-import dataset
+from dataset.train import *
 import confusion
 
 # round'n'round
@@ -18,7 +18,7 @@ def test_neural(w1, w2, b1, b2, sess):
     matrix_res = [[]]
 
     # test it now bitch!
-    t_out1 = tf.sigmoid(tf.add(tf.matmul(dataset.train_in, w1), b1))
+    t_out1 = tf.sigmoid(tf.add(tf.matmul(tin, w1), b1))
     t_out2 = tf.sigmoid(tf.add(tf.matmul(t_out1, w2), b2))
     t_result = sess.run([t_out2])
 
@@ -43,7 +43,7 @@ def test_neural(w1, w2, b1, b2, sess):
     # print(t_result)
 
     rounded_results = round_results(t_result[0])
-    matrix_res = confusion.build_matrix_array(matrix_res, dataset.train_out, rounded_results)
+    matrix_res = confusion.build_matrix_array(matrix_res, tout, rounded_results)
 
     # do the harlem shake
     confusion.confusion_matrix_graphic(matrix_res)

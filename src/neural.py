@@ -1,6 +1,6 @@
 import tensorflow as tf
 #
-import dataset
+from dataset.train import *
 
 def train(sess):
     w1 = tf.Variable(tf.random_normal([35, 20]), name='w1')
@@ -11,10 +11,10 @@ def train(sess):
 
     # activation functions
     # see more https://www.tensorflow.org/api_guides/python/nn
-    out1 = tf.sigmoid(tf.add(tf.matmul(dataset.train_in, w1), b1))
+    out1 = tf.sigmoid(tf.add(tf.matmul(tin, w1), b1))
     out2 = tf.sigmoid(tf.add(tf.matmul(out1, w2), b2))
 
-    error = tf.subtract(dataset.train_out, out2)
+    error = tf.subtract(tout, out2)
     mse = tf.reduce_mean(tf.square(error))
 
     # backpropagation method
