@@ -11,7 +11,7 @@ def build_matrix_array(matrix, desired_results, obtained_results):
         desired = convert.convert_binary_to_int(desired_results[position])
         obtained = convert.convert_binary_to_int(obtained_results[position])
         #
-        # print(desired, obtained)
+        # print('>>>>>>>>>>>', desired, obtained, desired_results[position], obtained_results[position])
         matrix[desired][obtained] = matrix[desired][obtained] + 1
 
     return matrix

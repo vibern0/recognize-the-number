@@ -18,3 +18,6 @@ def convert_binary_to_int(binary_value):
 
     elif binary_value[0] == 0. and binary_value[1] == 1. and binary_value[2] == 0. and binary_value[3] == 0.:
         return 4
+
+    else:
+        return 0

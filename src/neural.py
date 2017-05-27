@@ -2,12 +2,20 @@ import tensorflow as tf
 #
 from dataset.train import *
 
-def train(sess):
-    w1 = tf.Variable(tf.random_normal([35, 20]), name='w1')
-    b1 = tf.Variable(tf.zeros([20]), name='b1')
+nn_learning_tax = 0.01
+nn_inputs = 5 * 7
+nn_outputs = 4
+#
+nn_hidden1 = 20
+#
+model_path = "./tmp/my_test_model"
 
-    w2 = tf.Variable(tf.random_normal([20, 4]), name='w2')
-    b2 = tf.Variable(tf.zeros([4]), name='b2')
+def train():
+    w1 = tf.Variable(tf.random_normal(shape=[nn_inputs, nn_hidden1]), name='w1')
+    b1 = tf.Variable(tf.zeros([nn_hidden1]), name='b1')
+
+    w2 = tf.Variable(tf.random_normal(shape=[nn_hidden1, nn_outputs]), name='w2')
+    b2 = tf.Variable(tf.zeros([nn_outputs]), name='b2')
 
     # activation functions
     # see more https://www.tensorflow.org/api_guides/python/nn
@@ -19,11 +27,12 @@ def train(sess):
 
     # backpropagation method
     # see more https://www.tensorflow.org/api_guides/python/train
-    train = tf.train.AdamOptimizer(0.01).minimize(mse)
+    train = tf.train.AdamOptimizer(nn_learning_tax).minimize(mse)
 
     # tf.Session(config=tf.ConfigProto(log_device_placement=True))
     # to check gpu using if there is one available
-    # sess = tf.Session()
+    saver = tf.train.Saver()
+    sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
     err, target = 1, 0.01
@@ -33,4 +42,7 @@ def train(sess):
         epoch += 1
         err, _ = sess.run([mse, train])
 
-    return [w1, w2, b1, b2, epoch, err]
+    # print(sess.run(w1))
+
+    saver.save(sess, 'tmp/my_test_model')
+    return [epoch, err]
