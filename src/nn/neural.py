@@ -8,7 +8,7 @@ nn_outputs = 4
 #
 nn_hidden1 = 20
 #
-model_path = "./tmp/my_test_model"
+model_path_src = './nn/tmp/my_test_model'
 
 def train():
     w1 = tf.Variable(tf.random_normal(shape=[nn_inputs, nn_hidden1]), name='w1')
@@ -44,5 +44,5 @@ def train():
 
     # print(sess.run(w1))
 
-    saver.save(sess, 'tmp/my_test_model')
+    saver.save(sess, model_path_src)
     return [epoch, err]

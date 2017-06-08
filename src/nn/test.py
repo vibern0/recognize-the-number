@@ -4,6 +4,9 @@ import numpy as np
 from dataset.train import *
 import confusion
 
+meta_graph_src = './nn/tmp/my_test_model.meta'
+checkpoint_src = './nn/tmp'
+
 # round'n'round
 def round_results(array_results):
     #
@@ -18,8 +21,8 @@ def test_neural(epoch):
     matrix_res = [[]]
 
     with tf.Session() as sess:
-        saver = tf.train.import_meta_graph('tmp/my_test_model.meta')
-        saver.restore(sess,tf.train.latest_checkpoint('./tmp'))
+        saver = tf.train.import_meta_graph(meta_graph_src)
+        saver.restore(sess,tf.train.latest_checkpoint(checkpoint_src))
         graph = tf.get_default_graph()
         w1 = sess.run(graph.get_tensor_by_name("w1:0"))
         b1 = sess.run(graph.get_tensor_by_name("b1:0"))

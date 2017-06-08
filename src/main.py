@@ -1,27 +1,10 @@
-import tensorflow as tf
-import numpy as np
-import time
-#
-import neural
-import test
+from nn import NeuralNetwork
+import transform
 
-test_success = 0
-start = time.time()
-target = 0.01
+print('1 - Train\n2 - Test')
+x = int(raw_input('Option:'))
 
-for x in range(0, 1):
-
-    [epoch, err] = neural.train()
-    print('epoch:', epoch, 'mse:', err)
-
-    if err < target:
-        test_success = test_success + 1
-
-    test.test_neural(epoch);
-
-
-
-#
-
-print('time', time.time() - start)
-print('success ', test_success)
+if x is 1:
+    neural = NeuralNetwork()
+elif x is 2:
+    pass
