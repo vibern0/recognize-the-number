@@ -8,8 +8,8 @@ def build_matrix_array(matrix, desired_results, obtained_results):
     for position in range(0, len(desired_results)):
         # print(desired_results[position])
         #
-        desired = convert.convert_binary_to_int(desired_results[position])
-        obtained = convert.convert_binary_to_int(obtained_results[position])
+        desired = int(convert.convert_binary_to_int(desired_results[position]))
+        obtained = int(convert.convert_binary_to_int(obtained_results[position]))
         #
         # print('>>>>>>>>>>>', desired, obtained, desired_results[position], obtained_results[position])
         matrix[desired][obtained] = matrix[desired][obtained] + 1

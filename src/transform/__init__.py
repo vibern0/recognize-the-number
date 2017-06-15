@@ -3,7 +3,7 @@ from PIL import Image
 class Transform:
     def __init__(self):
         # open image
-        col = Image.open("transform/numbers/0.jpg")
+        col = Image.open("transform/numbers/4.jpg")
 
         # resize image
         col = col.resize((20, 16), Image.ANTIALIAS)

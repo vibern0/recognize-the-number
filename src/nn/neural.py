@@ -3,10 +3,10 @@ import tensorflow as tf
 from dataset.train import *
 
 nn_learning_tax = 0.01
-nn_inputs = 5 * 7
-nn_outputs = 4
+nn_inputs = 20 * 16
+nn_outputs = 6
 #
-nn_hidden1 = 20
+nn_hidden1 = 10 * 10
 #
 model_path_src = './nn/tmp/my_test_model'
 
@@ -19,10 +19,10 @@ def train():
 
     # activation functions
     # see more https://www.tensorflow.org/api_guides/python/nn
-    out1 = tf.sigmoid(tf.add(tf.matmul(tin, w1), b1))
+    out1 = tf.sigmoid(tf.add(tf.matmul(data_input, w1), b1))
     out2 = tf.sigmoid(tf.add(tf.matmul(out1, w2), b2))
 
-    error = tf.subtract(tout, out2)
+    error = tf.subtract(data_output, out2)
     mse = tf.reduce_mean(tf.square(error))
 
     # backpropagation method

@@ -30,7 +30,7 @@ def test_neural(epoch):
         b2 = sess.run(graph.get_tensor_by_name("b2:0"))
 
         # test it now bitch!
-        t_out1 = tf.sigmoid(tf.add(tf.matmul(tin, w1), b1))
+        t_out1 = tf.sigmoid(tf.add(tf.matmul(data_input, w1), b1))
         t_out2 = tf.sigmoid(tf.add(tf.matmul(t_out1, w2), b2))
         t_result = sess.run([t_out2])
 
@@ -51,11 +51,10 @@ def test_neural(epoch):
         # debug stuff
         # print('result', t_result)
 
-        # print(round_results(t_result[0]))
-        # print(t_result)
+        print(round_results(t_result[0]))
 
         rounded_results = round_results(t_result[0])
-        matrix_res = confusion.build_matrix_array(matrix_res, tout, rounded_results)
+        matrix_res = confusion.build_matrix_array(matrix_res, data_output, rounded_results)
 
         # do the harlem shake
         confusion.confusion_matrix_graphic(matrix_res)
