@@ -17,8 +17,8 @@ def build_matrix_array(matrix, desired_results, obtained_results):
     return matrix
 
 def confusion_matrix_graphic(array):
-    df_cm = pd.DataFrame(array, index = [i for i in 'ABCDE'],
-                      columns = [i for i in 'ABCDE'])
+    df_cm = pd.DataFrame(array, index = [i for i in '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'],
+                      columns = [i for i in '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'])
     plt.figure(figsize = (10,7))
     sn.heatmap(df_cm, annot=True)
     # Display matrix

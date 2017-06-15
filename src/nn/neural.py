@@ -1,6 +1,5 @@
 import tensorflow as tf
 #
-from dataset.train import *
 
 nn_learning_tax = 0.01
 nn_inputs = 20 * 16
@@ -10,7 +9,7 @@ nn_hidden1 = 10 * 10
 #
 model_path_src = './nn/tmp/my_test_model'
 
-def train():
+def train(data_input, data_output):
     w1 = tf.Variable(tf.random_normal(shape=[nn_inputs, nn_hidden1]), name='w1')
     b1 = tf.Variable(tf.zeros([nn_hidden1]), name='b1')
 

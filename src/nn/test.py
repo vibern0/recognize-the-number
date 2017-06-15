@@ -1,7 +1,6 @@
 import tensorflow as tf
 import numpy as np
 #
-from dataset.train import *
 import confusion
 
 meta_graph_src = './nn/tmp/my_test_model.meta'
@@ -17,7 +16,7 @@ def round_results(array_results):
 
     return matrix_result
 
-def test_neural(epoch):
+def test_neural(epoch, data_input, data_output):
     matrix_res = [[]]
 
     with tf.Session() as sess:
@@ -40,18 +39,12 @@ def test_neural(epoch):
         # and add one
 
         # demo matrix
-        matrix_res = [
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0]
-        ]
+        matrix_res = np.zeros((36, 36))
 
         # debug stuff
         # print('result', t_result)
 
-        print(round_results(t_result[0]))
+        # print(round_results(t_result[0]))
 
         rounded_results = round_results(t_result[0])
         matrix_res = confusion.build_matrix_array(matrix_res, data_output, rounded_results)
