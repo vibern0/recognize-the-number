@@ -6,7 +6,6 @@ import convert
 
 def build_matrix_array(matrix, desired_results, obtained_results):
     for position in range(0, len(desired_results)):
-        # print(desired_results[position])
         #
         desired = int(convert.convert_binary_to_int(desired_results[position]))
         obtained = int(convert.convert_binary_to_int(obtained_results[position]))
@@ -23,4 +22,6 @@ def confusion_matrix_graphic(array):
     sn.heatmap(df_cm, annot=True)
     # Display matrix
     plt.matshow(array)
+    plt.xlabel('obtained')
+    plt.ylabel('desired')
     plt.show()

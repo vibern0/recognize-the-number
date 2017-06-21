@@ -15,16 +15,14 @@ class NeuralNetwork:
 
         print('desfrdgthygju', len(data_input))
 
-        [to_train, to_verify, to_test, res_to_train, res_to_verify] = convert.dataset_matrix_to_lists(data_input, data_output, 75, 15, 15)
-
-
+        [to_train, to_test, res_to_train, res_to_test] = convert.dataset_matrix_to_lists(data_input, data_output, 75, 30)
 
         for x in range(0, 1):
             [epoch, err] = neural.train(to_train, res_to_train)
             print('epoch:', epoch, 'mse:', err)
             if err < target:
                 test_success = test_success + 1
-            test.test_neural(epoch, to_test, res_to_train);
+            test.test_neural(epoch, to_test, res_to_test);
 
         print('time', time.time() - start)
         print('success ', test_success)
