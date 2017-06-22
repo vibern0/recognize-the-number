@@ -6,7 +6,7 @@ def convert_binary_to_int(binary_value):
 
     result = binary_value[5] * 1 + binary_value[4] * 2 + binary_value[3] * 4 + binary_value[2] * 8 + binary_value[1] * 16 + binary_value[0] * 32
 
-    if result < 36:
+    if result < 36 and result > -1:
         return result
     else:
         return 0
