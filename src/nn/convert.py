@@ -22,12 +22,12 @@ def dataset_matrix_to_lists(matrix_data_input, matrix_data_output, p_train, p_te
 
     for d in range(0, len(matrix_data_input)):
 
-        # print('ptrain', p_train)
+        for a in range(0, 30):
+            to_train = to_train + [sum(matrix_data_input[d][a].astype(float).tolist(), [])]
+            res_to_train = res_to_train + [matrix_data_output[d][a]]
 
-        to_train = to_train + matrix_data_input[d][0 : 30]
-        to_test = to_test + matrix_data_input[d][30 : 39]
-
-        res_to_train = res_to_train + matrix_data_output[d][0 : 30]
-        res_to_test = res_to_test + matrix_data_output[d][30 : 39]
+        for a in range(30, 39):
+            to_test = to_test + [sum(matrix_data_input[d][a].astype(float).tolist(), [])]
+            res_to_test = res_to_test + [matrix_data_output[d][a]]
 
     return [to_train, to_test, res_to_train, res_to_test]
