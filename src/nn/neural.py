@@ -1,7 +1,7 @@
 import tensorflow as tf
 #
 
-nn_learning_tax = 0.001
+nn_learning_tax = 0.01
 nn_inputs = 20 * 16
 nn_outputs = 6
 #
