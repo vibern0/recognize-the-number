@@ -3,7 +3,7 @@ import tensorflow as tf
 
 nn_learning_tax = 0.001
 nn_inputs = 20 * 16
-nn_outputs = 6
+nn_outputs = 36
 #
 nn_hidden1 = 10 * 10
 #
