@@ -1,16 +1,17 @@
-from numbers.zero import *
-from numbers.one import *
-from numbers.two import *
-from numbers.three import *
-from numbers.four import *
-from numbers.five import *
-from numbers.six import *
-from numbers.seven import *
-from numbers.eight import *
-from numbers.nine import *
+''' Train data into a input and a output '''
+from .numbers.zero import *
+from .numbers.one import *
+from .numbers.two import *
+from .numbers.three import *
+from .numbers.four import *
+from .numbers.five import *
+from .numbers.six import *
+from .numbers.seven import *
+from .numbers.eight import *
+from .numbers.nine import *
 #
-from chars.ca import *
-from chars.cb import *
+from .chars.ca import *
+from .chars.cb import *
 
 data_input = [
     input_zero,

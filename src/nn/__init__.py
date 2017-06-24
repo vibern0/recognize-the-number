@@ -1,11 +1,11 @@
+'''base da classe neuralnetwork'''
 import tensorflow as tf
 import numpy as np
 import time
 #
-from dataset.train import *
-import convert
-import neural
-import test
+from .dataset.train import *
+from . import neural
+from . import test
 
 class NeuralNetwork:
     def __init__(self):
@@ -15,14 +15,17 @@ class NeuralNetwork:
 
         print('desfrdgthygju', len(data_input))
 
-        [to_train, to_test, res_to_train, res_to_test] = convert.dataset_matrix_to_lists(data_input, data_output, 75, 30)
+        [to_train,
+         to_test,
+         res_to_train,
+         res_to_test] = convert.dataset_matrix_to_lists(data_input, data_output, 75, 30)
 
         for x in range(0, 1):
             [epoch, err] = neural.train(to_train, res_to_train)
             print('epoch:', epoch, 'mse:', err)
             if err < target:
                 test_success = test_success + 1
-            test.test_neural(epoch, to_test, res_to_test);
+            test.test_neural(epoch, to_test, res_to_test)
 
         print('time', time.time() - start)
         print('success ', test_success)

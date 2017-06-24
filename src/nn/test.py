@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 #
-import confusion
+from . import confusion
 
 meta_graph_src = './nn/tmp/my_test_model.meta'
 checkpoint_src = './nn/tmp'
@@ -21,7 +21,7 @@ def test_neural(epoch, data_input, data_output):
 
     with tf.Session() as sess:
         saver = tf.train.import_meta_graph(meta_graph_src)
-        saver.restore(sess,tf.train.latest_checkpoint(checkpoint_src))
+        saver.restore(sess, tf.train.latest_checkpoint(checkpoint_src))
         graph = tf.get_default_graph()
         w1 = sess.run(graph.get_tensor_by_name("w1:0"))
         b1 = sess.run(graph.get_tensor_by_name("b1:0"))
