@@ -1,6 +1,83 @@
 from PIL import Image
 import numpy as np
 
+nomes_ficheiro = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+    'ca',
+    'cb',
+    'cc',
+    'cd',
+    'ce',
+    'cf',
+    'cg',
+    'ch',
+    'ci',
+    'cj',
+    'ck',
+    'cl',
+    'cm',
+    'cn',
+    'co',
+    'cp',
+    'cq',
+    'cr',
+    'cs',
+    'ct',
+    'cu',
+    'cv',
+    'cw',
+    'cx',
+    'cy',
+    'cz'
+]
+nomes_variavel = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+    'a',
+    'b',
+    'c',
+    'd',
+    'e',
+    'f',
+    'g',
+    'h',
+    'i',
+    'j',
+    'k',
+    'l',
+    'm',
+    'n',
+    'o',
+    'p',
+    'q',
+    'r',
+    's',
+    't',
+    'u',
+    'v',
+    'w',
+    'x',
+    'y',
+    'z'
+]
+
 class Dataset_Generator:
     def __init__(self):
          # open image
@@ -13,8 +90,9 @@ class Dataset_Generator:
         singlewidth= int(fullwidth/num_glyphs_per_line)
         singleheight = int(fullheight/num_lines_in_base_image)
         
-        with open('./generator/tmp/matrizes.txt',"w") as f:
-            for image_line in range(0, num_lines_in_base_image): # indice 0 a 35
+        for image_line in range(0, num_lines_in_base_image): # indice 0 a 35
+            with open('./generator/tmp/'+nomes_ficheiro[image_line]+'.py',"w") as f:
+                f.write('input_'+nomes_variavel[image_line]+' = [\n')
                 for glyph in range(0, num_glyphs_per_line): # indice 0 a 38
                     # calcular a coordenada x e y da glyph atual relativo á origem da imagem principal
                     absX = glyph*singlewidth
@@ -42,22 +120,33 @@ class Dataset_Generator:
 
                     # update values
                     pixels = [[1. if pixels[i][g] == 0 else 0. for g in range(width)] for i in range(height)]
-                    pixels2 = [[' ' if pixels[i][g] == 0 else '@' for g in range(width)] for i in range(height)]
+                    #pixels2 = [[' ' if pixels[i][g] == 0 else '@' for g in range(width)] for i in range(height)]
                     
-                    print('Matriz Resultado:')
-                    
-                    for h in range(0, len(pixels)):
-                        print(pixels[h])
-
-                    print('Matriz visual:')
-                        
-                    for h in range(0, len(pixels2)):
-                        print(pixels2[h])
-
                     # write information to a file
-                    f.write("Glyph["+str(image_line)+ ']['+str(glyph)+"] = \n")
-                    f.write(np.array2string(np.reshape(pixels,(16, 20)), separator=', ', max_line_width=120)) 
-                    f.write('\n\n')                
+                    f.write(np.array2string(np.reshape(pixels,(16, 20)), separator=',', max_line_width=120)) 
+                    if glyph < num_glyphs_per_line-1:
+                        f.write('\n,\n')   
+                # fechar o array            
+                f.write(']\n\n')
+                #escrever variavel de output
+                f.write('output_'+nomes_variavel[image_line]+' = [\n')
+                for i in range(0,40):
+                    f.write(np.array2string(self.convert_int_to_binaryArray(image_line), separator=','))
+                    if i < 39:
+                        f.write(',\n') 
+                f.write(']\n\n')        
+                    
+
+    def convert_int_to_binaryArray(self,number_to_convert):
+        output= np.zeros(6)
+        weight =32;
+
+        for i in range(0,6):
+            output[i]=int(number_to_convert/weight)
+            if output[i] == 1:
+                number_to_convert=number_to_convert-weight
+            weight=weight/2
+        return output
 
     def __del__(self):
         pass

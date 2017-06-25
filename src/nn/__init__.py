@@ -13,12 +13,12 @@ class NeuralNetwork:
         start = time.time()
         target = 0.01
 
-        print('desfrdgthygju', len(data_input))
+        print('Number of characters in input set:', len(data_input))
 
         [to_train,
          to_test,
          res_to_train,
-         res_to_test] = convert.dataset_matrix_to_lists(data_input, data_output, 75, 30)
+         res_to_test] = convert.dataset_matrix_to_lists(data_input, data_output)
 
         for x in range(0, 1):
             [epoch, err] = neural.train(to_train, res_to_train)

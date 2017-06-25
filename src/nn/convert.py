@@ -19,7 +19,7 @@ def convert_binary_to_int(binary_value):
         return 0
 
 
-def dataset_matrix_to_lists(matrix_data_input, matrix_data_output, p_train, p_test):
+def dataset_matrix_to_lists(matrix_data_input, matrix_data_output):
 
     to_train = []
     to_test = []
@@ -28,8 +28,6 @@ def dataset_matrix_to_lists(matrix_data_input, matrix_data_output, p_train, p_te
     res_to_test = []
 
     for d in range(0, len(matrix_data_input)):
-
-        # print('ptrain', p_train)
 
         to_train = to_train + matrix_data_input[d][0 : 30]
         to_test = to_test + matrix_data_input[d][30 : 39]
