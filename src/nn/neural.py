@@ -32,6 +32,12 @@ def train(data_input, data_output):
     # to check gpu using if there is one available
     saver = tf.train.Saver()
     sess = tf.Session()
+
+    # tensorboard --logdir=./logs/log/
+    tf.summary.scalar('mse', mse)
+    merged = tf.summary.merge_all()
+    writer = tf.summary.FileWriter('./logs/log', sess.graph)
+
     sess.run(tf.global_variables_initializer())
 
     err, target = 1, 0.01
@@ -39,7 +45,8 @@ def train(data_input, data_output):
 
     while err > target and epoch < max_epochs:
         epoch += 1
-        err, _ = sess.run([mse, train])
+        summary, err, _ = sess.run([merged, mse, train])
+        writer.add_summary(summary, epoch)
 
     # print(sess.run(w1))
 
