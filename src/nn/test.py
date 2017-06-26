@@ -50,4 +50,4 @@ def test_neural(epoch, data_input, data_output):
         matrix_res = confusion.build_matrix_array(matrix_res, data_output, rounded_results)
 
         # do the harlem shake
-        confusion.confusion_matrix_graphic(matrix_res)
+        # confusion.confusion_matrix_graphic(matrix_res)

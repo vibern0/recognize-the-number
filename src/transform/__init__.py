@@ -27,7 +27,7 @@ def convert_binary_to_int(binary_value):
 class Transform:
     def __init__(self):
         # open image
-        col = Image.open("transform/numbers/6.jpg")
+        col = Image.open("transform/numbers/0.jpg")
 
         # resize image
         col = col.resize((20, 16), Image.ANTIALIAS)

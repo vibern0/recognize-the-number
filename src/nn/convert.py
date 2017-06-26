@@ -20,7 +20,7 @@ def dataset_matrix_to_lists(matrix_data_input, matrix_data_output, p_train, p_te
     res_to_train = []
     res_to_test = []
 
-    for d in range(0, len(matrix_data_input)):
+    for d in range(0, 10):
 
         for a in range(0, 30):
             to_train = to_train + [sum(matrix_data_input[d][a].astype(float).tolist(), [])]

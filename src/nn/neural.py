@@ -1,7 +1,7 @@
 import tensorflow as tf
 #
 
-nn_learning_tax = 0.01
+nn_learning_tax = 0.02
 nn_inputs = 20 * 16
 nn_outputs = 6
 #
@@ -40,7 +40,7 @@ def train(data_input, data_output):
 
     sess.run(tf.global_variables_initializer())
 
-    err, target = 1, 0.01
+    err, target = 1, 0.0005
     epoch, max_epochs = 0, 10000
 
     while err > target and epoch < max_epochs:
