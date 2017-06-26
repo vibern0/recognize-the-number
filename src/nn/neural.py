@@ -5,7 +5,10 @@ nn_learning_tax = 0.01
 nn_inputs = 20 * 16
 nn_outputs = 6
 #
-nn_hidden1 = 10 * 10
+nn_hidden1 = 480
+nn_hidden2 = 690
+nn_hidden3 = 320
+nn_hidden4 = 110
 #
 model_path_src = './nn/tmp/my_test_model'
 
@@ -13,15 +16,27 @@ def train(data_input, data_output):
     w1 = tf.Variable(tf.random_normal(shape=[nn_inputs, nn_hidden1]), name='w1')
     b1 = tf.Variable(tf.zeros([nn_hidden1]), name='b1')
 
-    w2 = tf.Variable(tf.random_normal(shape=[nn_hidden1, nn_outputs]), name='w2')
-    b2 = tf.Variable(tf.zeros([nn_outputs]), name='b2')
+    w2 = tf.Variable(tf.random_normal(shape=[nn_hidden1, nn_hidden2]), name='w2')
+    b2 = tf.Variable(tf.zeros([nn_hidden2]), name='b2')
+
+    w3 = tf.Variable(tf.random_normal(shape=[nn_hidden2, nn_hidden3]), name='w3')
+    b3 = tf.Variable(tf.zeros([nn_hidden3]), name='b3')
+
+    w4 = tf.Variable(tf.random_normal(shape=[nn_hidden3, nn_hidden4]), name='w4')
+    b4 = tf.Variable(tf.zeros([nn_hidden4]), name='b4')
+
+    w5 = tf.Variable(tf.random_normal(shape=[nn_hidden4, nn_outputs]), name='w5')
+    b5 = tf.Variable(tf.zeros([nn_outputs]), name='b5')
 
     # activation functions
     # see more https://www.tensorflow.org/api_guides/python/nn
     out1 = tf.sigmoid(tf.add(tf.matmul(data_input, w1), b1))
     out2 = tf.sigmoid(tf.add(tf.matmul(out1, w2), b2))
+    out3 = tf.sigmoid(tf.add(tf.matmul(out2, w3), b3))
+    out4 = tf.sigmoid(tf.add(tf.matmul(out3, w4), b4))
+    out5 = tf.sigmoid(tf.add(tf.matmul(out4, w5), b5))
 
-    error = tf.subtract(data_output, out2)
+    error = tf.subtract(data_output, out5)
     mse = tf.reduce_mean(tf.square(error))
 
     # backpropagation method

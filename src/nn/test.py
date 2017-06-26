@@ -27,11 +27,20 @@ def test_neural(epoch, data_input, data_output):
         b1 = sess.run(graph.get_tensor_by_name("b1:0"))
         w2 = sess.run(graph.get_tensor_by_name("w2:0"))
         b2 = sess.run(graph.get_tensor_by_name("b2:0"))
+        w3 = sess.run(graph.get_tensor_by_name("w3:0"))
+        b3 = sess.run(graph.get_tensor_by_name("b3:0"))
+        w4 = sess.run(graph.get_tensor_by_name("w4:0"))
+        b4 = sess.run(graph.get_tensor_by_name("b4:0"))
+        w5 = sess.run(graph.get_tensor_by_name("w5:0"))
+        b5 = sess.run(graph.get_tensor_by_name("b5:0"))
 
         # test it now bitch!
         t_out1 = tf.sigmoid(tf.add(tf.matmul(data_input, w1), b1))
         t_out2 = tf.sigmoid(tf.add(tf.matmul(t_out1, w2), b2))
-        t_result = sess.run([t_out2])
+        t_out3 = tf.sigmoid(tf.add(tf.matmul(t_out2, w3), b3))
+        t_out4 = tf.sigmoid(tf.add(tf.matmul(t_out3, w4), b4))
+        t_out5 = tf.sigmoid(tf.add(tf.matmul(t_out4, w5), b5))
+        t_result = sess.run([t_out5])
 
         # round vector output
         # dataset vector output
@@ -50,4 +59,4 @@ def test_neural(epoch, data_input, data_output):
         matrix_res = confusion.build_matrix_array(matrix_res, data_output, rounded_results)
 
         # do the harlem shake
-        confusion.confusion_matrix_graphic(matrix_res)
+        # confusion.confusion_matrix_graphic(matrix_res)
